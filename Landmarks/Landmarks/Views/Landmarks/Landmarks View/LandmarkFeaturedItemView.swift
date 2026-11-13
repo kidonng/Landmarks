@@ -34,7 +34,8 @@ struct LandmarkFeaturedItemView: View {
                         Button("Learn More") {
                             modelData.path.append(landmark)
                         }
-                        .buttonStyle(.borderedProminent)
+                        // Adopts Liquid Glass for this floating primary call-to-action button.
+                        .buttonStyle(.glassProminent)
                         .padding(.bottom, Constants.learnMorePadding)
                     }
                     .padding([.bottom], Constants.learnMoreBottomPadding)

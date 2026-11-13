@@ -27,6 +27,7 @@ struct LandmarkGridItemView: View {
                     .foregroundColor(.white)
                     .padding(.bottom)
             }
+            .draggable(landmark)
     }
 }
 

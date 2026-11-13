@@ -19,7 +19,7 @@ struct LandmarksGrid: View {
                     if forEditing {
                         LandmarkGridItemView(landmark: landmark)
                     } else {
-                        NavigationLink(destination: LandmarkDetailView(landmark: landmark)) {
+                        NavigationLink(value: landmark) {
                             LandmarkGridItemView(landmark: landmark)
                         }
                         .buttonStyle(.plain)

@@ -10,9 +10,10 @@ import SwiftUI
 /// A view with a toggle button that shows or hides earned badges in a vertical layout.
 struct BadgesView: View {
     @Environment(ModelData.self) private var modelData
+    @Environment(\.scenePhase) private var scenePhase
     @State private var isExpanded: Bool = false
     @Namespace private var namespace
-    
+
     var body: some View {
         // Organizes the badges and toggle button to animate together.
         GlassEffectContainer(spacing: Constants.badgeGlassSpacing) {
@@ -48,6 +49,16 @@ struct BadgesView: View {
                 .glassEffectID("togglebutton", in: namespace)
             }
             .frame(width: Constants.badgeFrameWidth)
+        }
+        // Prevents the inspector from displaying after the app returns from the background.
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase != .active {
+                isExpanded = false
+            }
+        }
+        // Prevents the inspector from appearing mid-animation after this view is removed from the hierarchy.
+        .onDisappear {
+            isExpanded = false
         }
     }
 }
