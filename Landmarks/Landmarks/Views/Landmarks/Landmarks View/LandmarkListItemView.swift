@@ -33,6 +33,7 @@ struct LandmarkListItemView: View {
                 LandmarkFavoriteButton(landmark: landmark)
                 LandmarkCollectionsMenu(landmark: landmark)
             }
+            .draggable(landmark)
     }
 }
 

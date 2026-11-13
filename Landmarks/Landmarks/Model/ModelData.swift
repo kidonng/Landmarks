@@ -17,7 +17,14 @@ class ModelData {
     var landmarksByContinent: [Continent: [Landmark]] = [:]
     var featuredLandmark: Landmark?
     var selectedLandmark: Landmark? = nil
-    var isLandmarkInspectorPresented: Bool = false
+    var isLandmarkInspectorPresented: Bool = false {
+        didSet {
+            // Guard against the inspector appearing with no landmark to show.
+            if isLandmarkInspectorPresented && selectedLandmark == nil {
+                isLandmarkInspectorPresented = false
+            }
+        }
+    }
     
     var favoritesCollection: LandmarkCollection!
     var userCollections: [LandmarkCollection] = []
@@ -64,11 +71,7 @@ class ModelData {
         
         Task {
             do {
-                let fetched = try await fetchMapItems(for: landmarks)
-                
-                await MainActor.run {
-                    self.mapItemsByLandmarkId = fetched
-                }
+                mapItemsByLandmarkId = try await fetchMapItems(for: landmarks)
             } catch {
                 print("Couldn't fetch map items: \(error.localizedDescription)")
             }
